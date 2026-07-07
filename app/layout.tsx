@@ -12,7 +12,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://saeidchahardoli.vercel.app"),
+  metadataBase: new URL("https://saeidchahardoli.com"),
   title: `${profile.name} — ${profile.roles[0]}`,
   description: profile.intro,
   keywords: [
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     title: `${profile.name} — ${profile.roles[0]}`,
     description: profile.tagline,
     type: "website",
-    url: "https://saeidchahardoli.vercel.app",
+    url: "https://saeidchahardoli.com",
   },
   twitter: {
     card: "summary_large_image",
