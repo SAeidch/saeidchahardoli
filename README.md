@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Saeid Chahardoli — Personal Site
 
-## Getting Started
+Personal research portfolio for **Saeid Chahardoli** — AI & Robotics Researcher, Data Scientist, and Architectural Engineer. Scientific content with a generative *flow-field* aesthetic inspired by CFD streamlines and airflow research.
 
-First, run the development server:
+## Stack
+
+- **Next.js 16** (App Router) + **React 19**
+- **TypeScript**
+- **Tailwind CSS v4**
+- **Framer Motion** (scroll reveals)
+- HTML Canvas flow-field animation (`components/FlowField.tsx`)
+- Deployed on **Vercel**
+
+## Develop
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> Note: this project builds with **webpack** (`--webpack`) instead of Turbopack because it lives on a mapped network drive, which Turbopack's file scanner can't cross. On a local disk you can switch back to Turbopack for faster builds.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Edit content
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+All site content lives in **`data/profile.ts`** — profile, research areas, publications, experience, education, skills, honors. Edit that one file to update the site; no component changes needed.
 
-## Learn More
+## Deploy
 
-To learn more about Next.js, take a look at the following resources:
+Pushing to the `main` branch on GitHub auto-deploys to Vercel.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+git add -A
+git commit -m "Update content"
+git push
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Roadmap
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [ ] Custom domain
+- [ ] "Ask my research" AI chatbot (Vercel AI SDK + free-tier model)
+- [ ] Individual project / paper detail pages
+- [ ] Open Graph preview image
