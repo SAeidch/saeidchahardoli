@@ -6,6 +6,7 @@ import { profile } from "@/data/profile";
 const sections = [
   { id: "about", label: "About" },
   { id: "research", label: "Research" },
+  { id: "robot", label: "Robot" },
   { id: "publications", label: "Publications" },
   { id: "cv", label: "CV" },
   { id: "contact", label: "Contact" },

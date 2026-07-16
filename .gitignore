@@ -42,3 +42,7 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# unpublished source material (draft papers) — images are copied into public/robot/
+/Abstract Indoor air/
+.paper_text.txt

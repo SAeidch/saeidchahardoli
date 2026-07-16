@@ -1,6 +1,7 @@
 import FlowField from "@/components/FlowField";
 import Nav from "@/components/Nav";
 import Reveal from "@/components/Reveal";
+import Robot from "@/components/Robot";
 import {
   profile,
   researchAreas,
@@ -161,14 +162,17 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Robot ────────────────────────────────────────── */}
+      <Robot />
+
       {/* ── Publications ─────────────────────────────────── */}
       <section
         id="publications"
-        className="relative border-t border-ink/10 bg-paper/60 px-6 py-28 backdrop-blur-sm"
+        className="relative border-t border-ink/10 px-6 py-28"
       >
         <div className="mx-auto max-w-5xl">
           <Reveal>
-            <p className="section-label mb-3">03 / Publications</p>
+            <p className="section-label mb-3">04 / Publications</p>
             <h2 className="display mb-16 text-5xl text-ink sm:text-6xl">
               Peer-reviewed work
             </h2>
@@ -228,7 +232,7 @@ export default function Home() {
       <section id="cv" className="relative border-t border-ink/10 px-6 py-28">
         <div className="mx-auto max-w-6xl">
           <Reveal>
-            <p className="section-label mb-16">04 / Curriculum Vitae</p>
+            <p className="section-label mb-16">05 / Curriculum Vitae</p>
           </Reveal>
           <div className="grid gap-16 lg:grid-cols-2">
             <div>
@@ -305,7 +309,7 @@ export default function Home() {
       >
         <div className="mx-auto max-w-6xl">
           <Reveal>
-            <p className="section-label mb-6 !text-paper/50">05 / Contact</p>
+            <p className="section-label mb-6 !text-paper/50">06 / Contact</p>
             <h2 className="display text-5xl leading-tight sm:text-7xl">
               Let&apos;s build something
               <br />

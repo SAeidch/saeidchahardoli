@@ -3,7 +3,7 @@
 export const profile = {
   name: "Saeid Chahardoli",
   // Guiding word for the brand mark / identity.
-  mark: "Infera",
+  mark: "Aerion",
   roles: ["AI & Robotics Researcher", "Data Scientist", "Architectural Engineer"],
   tagline:
     "Bridging artificial intelligence and the physics of the built environment.",
@@ -56,6 +56,161 @@ export const researchAreas: ResearchArea[] = [
     tags: ["ANSYS Fluent", "CFD", "Ventilation", "Dispersion"],
   },
 ];
+
+/* ───────────────────────── Robot: field build ─────────────────────────
+   The autonomous air-quality robot. Content-only; the <Robot /> component
+   renders it. Hotspot x/y are percentages over public/robot/robot.jpg. */
+
+export type Hotspot = {
+  id: string;
+  x: number; // % from left
+  y: number; // % from top
+  label: string;
+  detail: string;
+};
+
+export type PipelineStep = {
+  step: string;
+  title: string;
+  blurb: string;
+};
+
+export const robot = {
+  eyebrow: "Field build · Robot-in-the-loop",
+  title: "The air-quality robot",
+  tagline:
+    "An autonomous robot I designed and built to map the air you can't see — and trace pollution back to its source.",
+  intro:
+    "Fixed air-quality sensors are blind between the dots. So I built a mobile one: a hand-wired robot that drives itself through a room on LiDAR-SLAM, samples CO₂ and PM₂.₅ every two seconds, and fuses those readings into a live map of the invisible. A single robot becomes a whole virtual sensor grid — and then climbs the concentration gradient to find where the pollution is coming from.",
+
+  // Callout tuned to the GenAI / builder audience.
+  pitch:
+    "It's a closed perception–decision–action loop running on real hardware: sense → localize → fuse → decide where to look next. One self-calibrating robot replaces a rack of fixed sensors, and lays the groundwork for multi-robot cooperative sensing and AI-driven ventilation control.",
+
+  image: "/robot/robot.jpg",
+  imageAlt:
+    "Custom two-deck mobile robot with a top-mounted LiDAR, air-quality sensor boards, and omnidirectional wheels",
+
+  hotspots: [
+    {
+      id: "lidar",
+      x: 52,
+      y: 16,
+      label: "2D LiDAR",
+      detail:
+        "Spinning laser scanner that builds the map and localizes the robot in real time (SLAM) — every air reading gets an accurate x, y position.",
+    },
+    {
+      id: "sensors",
+      x: 30,
+      y: 33,
+      label: "Multi-pollutant sensors",
+      detail:
+        "CO₂, PM₂.₅, temperature and relative humidity, sampled every 2 seconds for high-temporal-resolution monitoring.",
+    },
+    {
+      id: "compute",
+      x: 46,
+      y: 55,
+      label: "Raspberry Pi + Arduino",
+      detail:
+        "Raspberry Pi runs ROS 2, SLAM and the sensing pipeline; an Arduino handles low-level motor control and sensor I/O.",
+    },
+    {
+      id: "power",
+      x: 66,
+      y: 60,
+      label: "Battery + motor drivers",
+      detail:
+        "Onboard LiPo power and motor drivers make the platform fully untethered for autonomous surveys.",
+    },
+    {
+      id: "wheels",
+      x: 44,
+      y: 84,
+      label: "Omni-drive wheels",
+      detail:
+        "Omnidirectional wheels let the robot hold heading while translating in any direction — smooth, repeatable traverses across the grid.",
+    },
+  ] as Hotspot[],
+
+  pipeline: [
+    {
+      step: "01",
+      title: "Sense",
+      blurb:
+        "CO₂, PM₂.₅, temperature and humidity streamed every 2 s — each reading timestamped at the source.",
+    },
+    {
+      step: "02",
+      title: "Localize",
+      blurb:
+        "2D LiDAR SLAM maps the room and position-tags every measurement, turning a moving robot into a dense grid of virtual sensors.",
+    },
+    {
+      step: "03",
+      title: "Fuse",
+      blurb:
+        "Kalman filtering and inverse-distance weighting smooth the sparse trajectory into a continuous, room-wide pollutant field.",
+    },
+    {
+      step: "04",
+      title: "Locate",
+      blurb:
+        "Gradient-ascent search climbs the reconstructed field to the emission source — pinned to within ~0.74 m of the true location.",
+    },
+  ] as PipelineStep[],
+
+  stats: [
+    { value: "0.74 m", label: "source located within" },
+    { value: "2 s", label: "sampling cadence" },
+    { value: "4", label: "signals — CO₂ · PM₂.₅ · temp · RH" },
+    { value: "24→1", label: "fixed-sensor grid replaced by one robot" },
+  ],
+
+  stack: [
+    { group: "Compute", items: ["Raspberry Pi", "Arduino", "ROS 2"] },
+    { group: "Perception", items: ["2D LiDAR", "SLAM", "Occupancy Mapping"] },
+    {
+      group: "Air sensing",
+      items: ["CO₂ (NDIR)", "PM₂.₅ (laser)", "Temp", "Humidity"],
+    },
+    {
+      group: "Algorithms",
+      items: [
+        "Kalman Filter",
+        "Inverse-Distance Weighting",
+        "Gradient-Ascent Source Localization",
+        "Adaptive Sampling",
+      ],
+    },
+    { group: "Mobility", items: ["Omni-drive", "DC motors", "Untethered"] },
+    { group: "Software", items: ["Python", "Semantic Mapping", "Sensor Fusion"] },
+  ],
+
+  gallery: [
+    {
+      src: "/robot/chamber-setup.jpeg",
+      alt: "Diagram of the controlled test chamber with ventilation inlet and outlet, the robot, and a wall sensor",
+      caption:
+        "Controlled test chamber (3.2 × 4.2 × 2.45 m) with steady inlet/outlet ventilation — where the robot and fixed sensors were validated against a known smoke source.",
+    },
+    {
+      src: "/robot/sensor-grid.png",
+      alt: "2D grid of 6 columns by 4 rows of measurement points with a smoke generator marked",
+      caption:
+        "The virtual measurement grid: 24 points at 60 cm spacing across three heights, with a smoke generator as a ground-truth pollution source.",
+    },
+  ],
+
+  paper: {
+    title:
+      "Robot-in-the-Loop Indoor Air Quality Mapping and Source Localization Using LiDAR-SLAM and Multi-Pollutant Sensing",
+    authors:
+      "Chahardoli, S., Sarker, A., Lesan, M., Xiao, Y., & Bhattacharya, A.",
+    venue: "Indoor Air 2026 (forthcoming)",
+  },
+} as const;
 
 export type Publication = {
   authors: string;

@@ -8,7 +8,7 @@ Guidance for Claude Code (and humans) working in this repository. (The line abov
 
 Personal research portfolio for **Saeid Chahardoli** — AI & Robotics Researcher, Data Scientist (AI intern at Hart Howerton), Architectural Engineer, LSU PhD candidate.
 
-The aesthetic is **scientific-editorial + generative art**: a "paper & ink" theme with an animated **flow-field** canvas (particle streamlines that bend toward the cursor) referencing his CFD / indoor-airflow research. Brand mark word: **"Infera"**.
+The aesthetic is **scientific-editorial + generative art**: a "paper & ink" theme with an animated **flow-field** canvas (particle streamlines that bend toward the cursor) referencing his CFD / indoor-airflow research. Brand mark word: **"Aerion"**.
 
 - **Live:** https://saeidchahardoli.com (custom domain; also https://saeidchahardoli.vercel.app)
 - **Repo:** https://github.com/SAeidch/saeidchahardoli (branch `main`)
