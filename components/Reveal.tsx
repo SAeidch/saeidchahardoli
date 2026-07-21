@@ -1,8 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 
+/**
+ * Scroll-reveal wrapper. Uses an Apple-style critically-damped spring (§4:
+ * bounce 0 — no overshoot on content that merely arrives). Under
+ * prefers-reduced-motion it degrades to a plain opacity cross-fade with no
+ * translation (§14).
+ */
 export default function Reveal({
   children,
   delay = 0,
@@ -12,13 +18,19 @@ export default function Reveal({
   delay?: number;
   className?: string;
 }) {
+  const reduce = useReducedMotion();
+
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 22 }}
+      initial={{ opacity: 0, y: reduce ? 0 : 22 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={
+        reduce
+          ? { duration: 0.3, delay, ease: "easeOut" }
+          : { type: "spring", bounce: 0, duration: 0.7, delay }
+      }
     >
       {children}
     </motion.div>

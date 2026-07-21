@@ -1,4 +1,4 @@
-import FlowField from "@/components/FlowField";
+import Attractor from "@/components/Attractor";
 import Nav from "@/components/Nav";
 import Reveal from "@/components/Reveal";
 import Robot from "@/components/Robot";
@@ -30,7 +30,7 @@ function highlightAuthors(authors: string) {
 export default function Home() {
   return (
     <main id="top" className="relative">
-      <FlowField />
+      <Attractor />
       <Nav />
 
       {/* ── Hero ─────────────────────────────────────────── */}
@@ -40,7 +40,7 @@ export default function Home() {
             <span className="inline-block h-px w-10 bg-accent" />
             {profile.location}
           </p>
-          <h1 className="display text-[15vw] leading-[0.92] text-ink sm:text-[11vw] lg:text-[9rem]">
+          <h1 className="display display-xl text-[15vw] text-ink sm:text-[11vw] lg:text-[9rem]">
             Saeid
             <br />
             <span className="italic text-accent">Chahardoli</span>
@@ -58,18 +58,30 @@ export default function Home() {
           <div className="mt-10 flex flex-wrap gap-4">
             <a
               href="#research"
-              className="rounded-full bg-ink px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] text-paper transition-transform hover:-translate-y-0.5"
+              className="press rounded-full bg-ink px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] text-paper transition-transform hover:-translate-y-0.5"
             >
               View Research
             </a>
             <a
               href="#contact"
-              className="rounded-full border border-ink/20 px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] text-ink transition-colors hover:border-accent hover:text-accent"
+              className="press rounded-full border border-ink/20 px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] text-ink transition-colors hover:border-accent hover:text-accent"
             >
               Get in Touch
             </a>
           </div>
         </div>
+
+        {/* The map drawn in the background — signature as caption (art + math). */}
+        <p
+          aria-hidden="true"
+          className="absolute bottom-8 right-6 hidden max-w-[15rem] text-right font-mono text-[0.62rem] leading-relaxed tracking-wide text-ink/35 lg:block"
+        >
+          xₙ₊₁ = sin(a·yₙ) + c·cos(a·xₙ)
+          <br />
+          yₙ₊₁ = sin(b·xₙ) + d·cos(b·yₙ)
+          <br />
+          <span className="text-ink/25">— Clifford attractor, drawn live</span>
+        </p>
         <div className="section-label absolute bottom-8 left-1/2 -translate-x-1/2 animate-pulse">
           scroll ↓
         </div>
@@ -294,7 +306,7 @@ export default function Home() {
           <Reveal>
             <a
               href={profile.links.cv}
-              className="mt-14 inline-block rounded-full bg-ink px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] text-paper transition-transform hover:-translate-y-0.5"
+              className="press mt-14 inline-block rounded-full bg-ink px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] text-paper transition-transform hover:-translate-y-0.5"
             >
               Download full CV ↓
             </a>
@@ -305,11 +317,11 @@ export default function Home() {
       {/* ── Contact ──────────────────────────────────────── */}
       <section
         id="contact"
-        className="relative border-t border-ink/10 bg-ink px-6 py-28 text-paper"
+        className="relative border-t border-ink/10 bg-panel px-6 py-28 text-panel-fg"
       >
         <div className="mx-auto max-w-6xl">
           <Reveal>
-            <p className="section-label mb-6 !text-paper/50">06 / Contact</p>
+            <p className="section-label mb-6 !text-panel-fg/50">06 / Contact</p>
             <h2 className="display text-5xl leading-tight sm:text-7xl">
               Let&apos;s build something
               <br />
@@ -319,16 +331,16 @@ export default function Home() {
           <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             <Reveal>
               <a href={`mailto:${profile.email}`} className="group block">
-                <span className="section-label !text-paper/50">Email</span>
-                <p className="mt-2 text-paper transition-colors group-hover:text-accent">
+                <span className="section-label !text-panel-fg/50">Email</span>
+                <p className="mt-2 text-panel-fg transition-colors group-hover:text-accent">
                   {profile.email}
                 </p>
               </a>
             </Reveal>
             <Reveal delay={0.05}>
               <div>
-                <span className="section-label !text-paper/50">Phone</span>
-                <p className="mt-2 text-paper">{profile.phone}</p>
+                <span className="section-label !text-panel-fg/50">Phone</span>
+                <p className="mt-2 text-panel-fg">{profile.phone}</p>
               </div>
             </Reveal>
             <Reveal delay={0.1}>
@@ -338,8 +350,8 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="group block"
               >
-                <span className="section-label !text-paper/50">GitHub</span>
-                <p className="mt-2 text-paper transition-colors group-hover:text-accent">
+                <span className="section-label !text-panel-fg/50">GitHub</span>
+                <p className="mt-2 text-panel-fg transition-colors group-hover:text-accent">
                   @SAeidch ↗
                 </p>
               </a>
@@ -351,8 +363,8 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="group block"
               >
-                <span className="section-label !text-paper/50">Scholar</span>
-                <p className="mt-2 text-paper transition-colors group-hover:text-accent">
+                <span className="section-label !text-panel-fg/50">Scholar</span>
+                <p className="mt-2 text-panel-fg transition-colors group-hover:text-accent">
                   Google Scholar ↗
                 </p>
               </a>
@@ -361,7 +373,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="border-t border-paper/10 bg-ink px-6 py-8 text-paper/40">
+      <footer className="border-t border-panel-fg/10 bg-panel px-6 py-8 text-panel-fg/40">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 font-mono text-xs uppercase tracking-[0.15em] sm:flex-row">
           <span>
             {profile.mark} — © {profile.name}

@@ -75,21 +75,33 @@ git add -A && git commit -m "message" && git push
 
 ```
 app/
-  layout.tsx     # fonts (Geist sans/mono, Fraunces serif), SEO metadata, canonical = saeidchahardoli.com
-  page.tsx       # composes all sections from data/profile.ts
-  globals.css    # Tailwind v4 @theme: --color-paper / --color-ink / --color-accent; .display, .section-label
+  layout.tsx      # fonts (Geist sans/mono, Fraunces serif), SEO metadata, canonical = saeidchahardoli.com,
+                  #   viewport export (colorScheme/themeColor), + inline anti-FOUC theme script (sets data-theme
+                  #   before paint). <html> has suppressHydrationWarning because that attribute is set out-of-band.
+  page.tsx        # composes all sections from data/profile.ts
+  globals.css     # Tailwind v4 @theme tokens + light/dark theme via :root[data-theme="dark"]; utilities below
 components/
-  FlowField.tsx  # 'use client' canvas flow field; honors prefers-reduced-motion; cursor-reactive
-  Nav.tsx        # 'use client' sticky nav
-  Reveal.tsx     # Framer Motion scroll-reveal wrapper
+  Attractor.tsx   # 'use client' — THE signature: a Clifford strange-attractor canvas (fractal generative art).
+                  #   Theme-aware (re-reads CSS vars on data-theme change), cursor-reactive, reduced-motion static.
+                  #   Replaced the old FlowField (removed). Fixed, full-viewport, -z-10, pointer-events-none.
+  ThemeToggle.tsx # 'use client' — spring-eased sun/moon toggle; flips data-theme + persists to localStorage
+  Nav.tsx         # 'use client' sticky glass nav; spring active-section indicator, mobile sheet, ThemeToggle
+  Reveal.tsx      # Framer Motion scroll-reveal; critically-damped spring, reduced-motion cross-fade
+  Robot.tsx       # 'use client' — annotated robot section
 data/
-  profile.ts     # ← single source of content
-public/cv/       # downloadable CV
+  profile.ts      # ← single source of content
+public/cv/        # downloadable CV
 ```
 
+### Design language — Apple fluid interfaces (`SKILL.md`)
+The motion/craft language follows the **apple-design** skill in `SKILL.md`: interruptible **springs** (critically damped / `bounce: 0` for UI that merely arrives; a little bounce for deliberate flicks like the theme toggle), instant `.press` pointer-down feedback, translucent **`.glass`** chrome with a soft `.scroll-edge`, size-specific type tracking, and full `prefers-reduced-motion` / `-transparency` / `-contrast` support.
+
 ### Design tokens
-- Colors: paper `#f5f3ee`, ink `#17170f`, accent `#2e5eaa` (defined in `globals.css @theme`, used as `bg-paper`, `text-ink`, `text-accent`).
-- Type: `.display` = Fraunces serif (headings), `.section-label` = Geist Mono uppercase (labels), Geist Sans (body).
+- **Semantic tokens** live in `globals.css @theme` and are re-pointed for dark under `:root[data-theme="dark"]`:
+  - `paper` (page bg), `ink` (text/marks), `accent` (editorial blue), `panel` / `panel-fg` (the inverted call-to-action surface — contact, footer, robot paper card — so those blocks stay correct in both themes).
+  - Light: paper `#f5f3ee`, ink `#17170f`, accent `#2e5eaa`. Dark: paper `#0e0f14`, ink `#ecebe2`, accent `#7ba6f5`.
+  - Use `bg-paper` / `text-ink` / `text-accent` / `bg-panel` / `text-panel-fg`. Alpha utilities (`text-ink/70`, `bg-paper/60`, `border-ink/10`) invert automatically. Only use `bg-ink text-paper` where you deliberately want a button to **invert** between themes.
+- Type: `.display` = Fraunces serif (headings; `.display-xl` tightens tracking at hero scale), `.section-label` = Geist Mono uppercase (labels), Geist Sans (body).
 
 ## Roadmap / phase 2 (not yet built)
 
@@ -97,8 +109,8 @@ public/cv/       # downloadable CV
    - **Cost:** hosting is free (Vercel Function on Hobby). Model can be **free** via Google Gemini Flash / Groq / Cloudflare Workers AI (rate-limited free tiers). Claude/OpenAI are paid but cheap at this traffic.
    - **Plan:** add a Next.js API route using the **Vercel AI SDK**; store the provider API key as a Vercel environment variable (`vercel env add`); ground responses on `data/profile.ts` content; add lightweight rate-limiting.
 2. Per-publication / per-project detail pages (figures, abstracts).
-3. Design polish: dark-mode variant, alternate accent, flow-field intensity tuning.
-4. Open Graph preview image.
+3. Design polish: alternate accent, attractor parameter/intensity tuning. (Dark mode + toggle — **done**.)
+4. Open Graph preview image (could render the strange attractor).
 
 ## Conventions
 

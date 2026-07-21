@@ -85,7 +85,7 @@ export default function Robot() {
                   key={activeSpot.id}
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ type: "spring", bounce: 0, duration: 0.4 }}
                 >
                   <span className="section-label !text-accent">
                     {String(robot.hotspots.indexOf(activeSpot) + 1).padStart(
@@ -207,14 +207,14 @@ export default function Robot() {
 
         {/* Paper reference */}
         <Reveal>
-          <div className="mt-16 rounded-2xl border border-ink/10 bg-ink px-7 py-8 text-paper">
-            <span className="section-label !text-paper/50">
+          <div className="mt-16 rounded-2xl border border-ink/10 bg-panel px-7 py-8 text-panel-fg">
+            <span className="section-label !text-panel-fg/50">
               Forthcoming publication
             </span>
-            <h4 className="mt-3 max-w-3xl text-lg leading-snug text-paper sm:text-xl">
+            <h4 className="mt-3 max-w-3xl text-lg leading-snug text-panel-fg sm:text-xl">
               {robot.paper.title}
             </h4>
-            <p className="mt-3 text-sm text-paper/60">{robot.paper.authors}</p>
+            <p className="mt-3 text-sm text-panel-fg/60">{robot.paper.authors}</p>
             <p className="mt-1 font-mono text-xs uppercase tracking-wider text-accent">
               {robot.paper.venue}
             </p>
