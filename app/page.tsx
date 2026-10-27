@@ -1,7 +1,10 @@
-import Attractor from "@/components/Attractor";
+import Link from "next/link";
 import Nav from "@/components/Nav";
 import Reveal from "@/components/Reveal";
 import Robot from "@/components/Robot";
+import TransformerHero from "@/components/TransformerHero";
+import { ModuleCard, TalkList } from "@/components/learn/Cards";
+import { modules } from "@/data/learn";
 import {
   profile,
   researchAreas,
@@ -30,59 +33,61 @@ function highlightAuthors(authors: string) {
 export default function Home() {
   return (
     <main id="top" className="relative">
-      <Attractor />
       <Nav />
 
       {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="relative flex min-h-screen items-center px-6">
-        <div className="mx-auto w-full max-w-6xl">
-          <p className="section-label mb-6 flex items-center gap-3">
-            <span className="inline-block h-px w-10 bg-accent" />
-            {profile.location}
-          </p>
-          <h1 className="display display-xl text-[15vw] text-ink sm:text-[11vw] lg:text-[9rem]">
-            Saeid
-            <br />
-            <span className="italic text-accent">Chahardoli</span>
-          </h1>
-          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
-            {profile.roles.map((r) => (
-              <span key={r} className="section-label !text-ink/70">
-                {r}
-              </span>
-            ))}
+      <section className="relative flex min-h-screen items-center px-6 pb-20 pt-28">
+        <div className="mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
+          <div>
+            <p className="section-label mb-6 flex items-center gap-3">
+              <span className="inline-block h-px w-10 bg-accent" />
+              {profile.location}
+            </p>
+            <h1 className="display display-xl text-[15vw] text-ink sm:text-[11vw] lg:text-[5.6rem] xl:text-[6.6rem]">
+              Saeid
+              <br />
+              <span className="italic text-accent">Chahardoli</span>
+            </h1>
+            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
+              {profile.roles.map((r) => (
+                <span key={r} className="section-label !text-ink/70">
+                  {r}
+                </span>
+              ))}
+            </div>
+            <p className="mt-10 max-w-xl text-lg leading-relaxed text-ink/80 sm:text-xl">
+              {profile.tagline}
+            </p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <a
+                href="#research"
+                className="press rounded-full bg-ink px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] text-paper transition-transform hover:-translate-y-0.5"
+              >
+                View Research
+              </a>
+              <Link
+                href="/learn/transformers"
+                className="press rounded-full border border-ink/20 px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] text-ink transition-colors hover:border-accent hover:text-accent"
+              >
+                Learn Transformers
+              </Link>
+            </div>
           </div>
-          <p className="mt-10 max-w-2xl text-lg leading-relaxed text-ink/80 sm:text-xl">
-            {profile.tagline}
-          </p>
-          <div className="mt-10 flex flex-wrap gap-4">
-            <a
-              href="#research"
-              className="press rounded-full bg-ink px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] text-paper transition-transform hover:-translate-y-0.5"
-            >
-              View Research
-            </a>
-            <a
-              href="#contact"
-              className="press rounded-full border border-ink/20 px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] text-ink transition-colors hover:border-accent hover:text-accent"
-            >
-              Get in Touch
-            </a>
-          </div>
-        </div>
 
-        {/* The map drawn in the background — signature as caption (art + math). */}
-        <p
-          aria-hidden="true"
-          className="absolute bottom-8 right-6 hidden max-w-[15rem] text-right font-mono text-[0.62rem] leading-relaxed tracking-wide text-ink/35 lg:block"
-        >
-          xₙ₊₁ = sin(a·yₙ) + c·cos(a·xₙ)
-          <br />
-          yₙ₊₁ = sin(b·xₙ) + d·cos(b·yₙ)
-          <br />
-          <span className="text-ink/25">— Clifford attractor, drawn live</span>
-        </p>
-        <div className="section-label absolute bottom-8 left-1/2 -translate-x-1/2 animate-pulse">
+          {/* The model from the M.S. defense, drawn live — signature as figure. */}
+          <figure>
+            <TransformerHero className="h-[24rem] sm:h-[30rem] lg:h-[min(76vh,700px)]" />
+            <figcaption className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 font-mono text-[0.66rem] leading-relaxed tracking-wide text-ink/45">
+              <span>
+                softmax(QKᵀ/√d<sub>k</sub>)·V — the Transformer + adapter from my M.S. defense
+              </span>
+              <Link href="/learn/transformers" className="text-accent hover:underline">
+                How it works, number by number →
+              </Link>
+            </figcaption>
+          </figure>
+        </div>
+        <div className="section-label absolute bottom-6 left-1/2 hidden -translate-x-1/2 animate-pulse sm:block">
           scroll ↓
         </div>
       </section>
@@ -177,6 +182,41 @@ export default function Home() {
       {/* ── Robot ────────────────────────────────────────── */}
       <Robot />
 
+      {/* ── Learn & Talks ────────────────────────────────── */}
+      <section id="learn" className="relative border-t border-ink/10 px-6 py-28">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <p className="section-label mb-3">04 / Learn &amp; Talks</p>
+            <h2 className="display mb-6 text-5xl text-ink sm:text-6xl">
+              Open the <span className="italic text-accent">black box.</span>
+            </h2>
+            <p className="max-w-2xl text-lg leading-relaxed text-ink/75">
+              Interactive lessons that run a real model in your browser and show every number it computes, plus the
+              talks where I presented the work.
+            </p>
+          </Reveal>
+          <div className="mt-14 grid gap-6">
+            {modules.map((m) => (
+              <Reveal key={m.slug}>
+                <ModuleCard m={m} />
+              </Reveal>
+            ))}
+          </div>
+          <Reveal>
+            <p className="section-label mb-6 mt-16">Talks</p>
+          </Reveal>
+          <TalkList />
+          <Reveal>
+            <Link
+              href="/learn"
+              className="mt-12 inline-block font-mono text-xs uppercase tracking-[0.15em] text-accent hover:underline"
+            >
+              All modules and talks →
+            </Link>
+          </Reveal>
+        </div>
+      </section>
+
       {/* ── Publications ─────────────────────────────────── */}
       <section
         id="publications"
@@ -184,14 +224,14 @@ export default function Home() {
       >
         <div className="mx-auto max-w-5xl">
           <Reveal>
-            <p className="section-label mb-3">04 / Publications</p>
+            <p className="section-label mb-3">05 / Publications</p>
             <h2 className="display mb-16 text-5xl text-ink sm:text-6xl">
-              Peer-reviewed work
+              Selected publications
             </h2>
           </Reveal>
           <ol className="divide-y divide-ink/10">
             {publications.map((p, i) => {
-              const href = p.doi ? `https://doi.org/${p.doi}` : undefined;
+              const href = p.doi ? `https://doi.org/${p.doi}` : p.url;
               const Wrapper = href ? "a" : "div";
               return (
                 <Reveal key={i} delay={Math.min(i * 0.04, 0.3)}>
@@ -202,7 +242,13 @@ export default function Home() {
                         : {})}
                       className="group grid grid-cols-[auto_1fr] gap-6 py-7 sm:grid-cols-[5rem_1fr]"
                     >
-                      <span className="display text-2xl text-accent/70">
+                      <span
+                        className={
+                          /^\d{4}$/.test(p.year)
+                            ? "display text-2xl text-accent/70"
+                            : "pt-1.5 font-mono text-[0.62rem] uppercase tracking-[0.18em] text-accent/70"
+                        }
+                      >
                         {p.year}
                       </span>
                       <div>
@@ -216,7 +262,7 @@ export default function Home() {
                           {p.venue}
                           {href && (
                             <span className="ml-2 text-accent opacity-0 transition-opacity group-hover:opacity-100">
-                              ↗ DOI
+                              ↗ {p.doi ? "DOI" : "Link"}
                             </span>
                           )}
                         </p>
@@ -244,7 +290,7 @@ export default function Home() {
       <section id="cv" className="relative border-t border-ink/10 px-6 py-28">
         <div className="mx-auto max-w-6xl">
           <Reveal>
-            <p className="section-label mb-16">05 / Curriculum Vitae</p>
+            <p className="section-label mb-16">06 / Curriculum Vitae</p>
           </Reveal>
           <div className="grid gap-16 lg:grid-cols-2">
             <div>
@@ -304,12 +350,20 @@ export default function Home() {
           </div>
 
           <Reveal>
-            <a
-              href={profile.links.cv}
-              className="press mt-14 inline-block rounded-full bg-ink px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] text-paper transition-transform hover:-translate-y-0.5"
-            >
-              Download full CV ↓
-            </a>
+            <div className="mt-14 flex flex-wrap items-center gap-4">
+              <a
+                href={profile.links.cv}
+                className="press inline-block rounded-full bg-ink px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] text-paper transition-transform hover:-translate-y-0.5"
+              >
+                Download CV · PDF ↓
+              </a>
+              <a
+                href={profile.links.cvDocx}
+                className="press inline-block rounded-full border border-ink/20 px-6 py-3 font-mono text-xs uppercase tracking-[0.15em] text-ink transition-colors hover:border-accent hover:text-accent"
+              >
+                Word ↓
+              </a>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -321,14 +375,17 @@ export default function Home() {
       >
         <div className="mx-auto max-w-6xl">
           <Reveal>
-            <p className="section-label mb-6 !text-panel-fg/50">06 / Contact</p>
+            <p className="section-label mb-6 !text-panel-fg/50">07 / Contact</p>
             <h2 className="display text-5xl leading-tight sm:text-7xl">
               Let&apos;s build something
               <br />
               <span className="italic text-accent">intelligent.</span>
             </h2>
+            <p className="mt-8 font-mono text-xs uppercase tracking-[0.18em] text-panel-fg/60">
+              {profile.availability}
+            </p>
           </Reveal>
-          <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
             <Reveal>
               <a href={`mailto:${profile.email}`} className="group block">
                 <span className="section-label !text-panel-fg/50">Email</span>
@@ -357,6 +414,19 @@ export default function Home() {
               </a>
             </Reveal>
             <Reveal delay={0.15}>
+              <a
+                href={profile.links.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block"
+              >
+                <span className="section-label !text-panel-fg/50">LinkedIn</span>
+                <p className="mt-2 text-panel-fg transition-colors group-hover:text-accent">
+                  Saeid Chahardoli ↗
+                </p>
+              </a>
+            </Reveal>
+            <Reveal delay={0.2}>
               <a
                 href={profile.links.scholar}
                 target="_blank"

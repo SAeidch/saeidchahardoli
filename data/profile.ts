@@ -12,10 +12,13 @@ export const profile = {
   location: "Baton Rouge, Louisiana, USA",
   email: "schaha1@lsu.edu",
   phone: "+1 (225) 409-9216",
+  availability: "Available Summer 2027 · Eligible for CPT/OPT work authorization",
   links: {
     github: "https://github.com/SAeidch",
-    scholar: "https://scholar.google.com/scholar?q=Saeid+Chahardoli",
-    cv: "/cv/Saeid-Chahardoli-CV.docx",
+    linkedin: "https://www.linkedin.com/in/saeid-chahardoli-278401173/",
+    scholar: "https://scholar.google.com/citations?user=CAMi9GsAAAAJ&hl=en",
+    cv: "/cv/Saeid-Chahardoli-CV.pdf",
+    cvDocx: "/cv/Saeid-Chahardoli-CV.docx",
   },
 } as const;
 
@@ -29,31 +32,31 @@ export type ResearchArea = {
 export const researchAreas: ResearchArea[] = [
   {
     index: "01",
-    title: "AI for Indoor Air Quality & HVAC",
+    title: "Deep Reinforcement Learning for Buildings",
     blurb:
-      "Optimizing indoor air quality and HVAC systems with AI and robots. Reinforcement-learning policies (PPO) trade off ventilation, comfort, and energy against measured baselines.",
-    tags: ["Reinforcement Learning", "HVAC", "IAQ", "Optimization"],
+      "PPO agents that calibrate CFD boundary conditions against live sensor streams, cutting manual calibration from hours to minutes per case, and ventilation policies that use less energy than rule-based control at equal occupant comfort.",
+    tags: ["Reinforcement Learning", "PPO", "CFD Calibration", "HVAC"],
   },
   {
     index: "02",
-    title: "Physics-Informed Machine Learning",
+    title: "Physics-Informed & Sequence Models",
     blurb:
-      "Predicting airflow distribution by combining Explainable Boosting Machines and deep learning with CFD-grounded features — fast surrogates for slow simulations.",
-    tags: ["EBM", "Transformers", "RNNs", "Surrogate Models"],
+      "Transformer and BiLSTM forecasters for indoor time series, transfer learning with a Transformer adapter, and physics-regularized Kolmogorov–Arnold surrogates that predict full concentration fields in real time (55 → 15 minutes per configuration).",
+    tags: ["Transformers", "Transfer Learning", "KAN", "Surrogate Models"],
   },
   {
     index: "03",
     title: "Autonomous Mobile Sensing",
     blurb:
-      "A custom ROS 2 mobile robot that logs CO₂, temperature, humidity and airflow with time-sync and mapping — enabling repeatable indoor air-quality surveys across zones.",
-    tags: ["ROS 2", "SLAM", "Nav2", "LiDAR", "Sensor Fusion"],
+      "A custom ROS 2 mobile robot that logs CO₂, temperature, humidity and airflow with hardware time sync, SLAM and Nav2, steered by an uncertainty-driven active-learning loop that picks the next best place to measure.",
+    tags: ["ROS 2", "SLAM", "Nav2", "Active Learning", "Sensor Fusion"],
   },
   {
     index: "04",
-    title: "CFD & Building Physics",
+    title: "CFD, Bayesian Optimization & Comfort",
     blurb:
-      "High-fidelity computational fluid dynamics of particle dispersion, ventilation, and thermal comfort — validated against sensor data from real indoor environments.",
-    tags: ["ANSYS Fluent", "CFD", "Ventilation", "Dispersion"],
+      "High-fidelity CFD of ventilation and particle dispersion validated against chamber data, combinatorial Bayesian optimization of air-purifier placement, and thermal-comfort models from IR imaging and wearable sensors.",
+    tags: ["ANSYS Fluent", "Bayesian Optimization", "Thermal Comfort", "CFD"],
   },
 ];
 
@@ -218,12 +221,70 @@ export type Publication = {
   title: string;
   venue: string;
   doi?: string;
+  url?: string;
 };
 
 // Author name emphasized in the UI:
 export const AUTHOR_HIGHLIGHT = "Chahardoli";
 
+// Selected list, newest first (35 indexed publications in total — see Google Scholar).
 export const publications: Publication[] = [
+  {
+    authors: "Chahardoli, S., Mousavi, E., & Bhattacharya, A.",
+    year: "Preprint",
+    title:
+      "Indoor Airflow Patterns for Random Occupant Movement Prediction Using an Event-Based Approach",
+    venue: "SSRN preprint 6847975",
+    url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6847975",
+  },
+  {
+    authors: "Chahardoli, S., Lesan, M., Sarker, A., Navazani, M., & Bhattacharya, A.",
+    year: "2026",
+    title:
+      "Real-Time CFD Model Calibration of an Environmental Chamber Using Deep Reinforcement Learning",
+    venue: "ASHRAE Transactions, 132, 1233–1240",
+  },
+  {
+    authors: "Chahardoli, S., Sedghikhanshir, A., Chen, Y., Zhu, Y., & Bhattacharya, A.",
+    year: "2026",
+    title:
+      "Experimental and Numerical Analysis of Evaluating the Cooling Potential of a Green Wall in a Controlled Chamber",
+    venue: "Building and Environment, art. 115119",
+  },
+  {
+    authors: "Chahardoli, S., Sarker, A., Lesan, M., Xiao, Y., Johannsen, A. Z., & Bhattacharya, A.",
+    year: "2026",
+    title:
+      "SIMOC-Inspired Mesh Sensing and Combinatorial Bayesian Optimization of Chamber Air-Purifier Placement",
+    venue: "E3S Web of Conferences, 716, 01047",
+  },
+  {
+    authors: "Sarker, A., Lesan, M., Chahardoli, S., & Bhattacharya, A.",
+    year: "2026",
+    title:
+      "Real-Time Indoor CO₂ Distribution Prediction Using CFD and a Physics-Regularized Kolmogorov–Arnold Network",
+    venue: "E3S Web of Conferences, 716, 01039",
+  },
+  {
+    authors: "Xiao, Y., Chahardoli, S., Lesan, M., Sarker, A., Johannsen, A. Z., & Bhattacharya, A.",
+    year: "2026",
+    title:
+      "Optimizing Ventilation Inlet and Outlet Configurations Using a UQ-Informed Robotic Sensing Platform",
+    venue: "E3S Web of Conferences, 716, 01049",
+  },
+  {
+    authors: "Chahardoli, S., Lesan, M., & Bhattacharya, A.",
+    year: "2025",
+    title:
+      "A Reinforcement Learning-Based Ventilation Strategy for Occupant-Centric Thermal Comfort and Energy Efficiency",
+    venue: "Computing in Civil Engineering 2025",
+  },
+  {
+    authors: "Chahardoli, S., Zhu, Y., & Bhattacharya, A.",
+    year: "2025",
+    title: "Data-Driven Prediction of Thermal Comfort Using IR Imaging and Wearable Sensor Data",
+    venue: "REHVA HVAC World Congress, 530–540",
+  },
   {
     authors: "Chahardoli, S., Nikoopayan Tak, M. S., Lesan, M., Mousavi, E., & Bhattacharya, A.",
     year: "2025",
@@ -303,25 +364,24 @@ export type TimelineItem = {
 
 export const experience: TimelineItem[] = [
   {
-    period: "2026",
+    period: "Jun — Aug 2026",
     title: "Data Scientist / AI Intern",
-    org: "Hart Howerton",
+    org: "Hart Howerton, San Francisco, CA",
     detail:
-      "Applying data science, machine learning, and AI to design, planning, and analytics workflows at a leading planning, architecture, and landscape architecture firm.",
+      "Built and deployed a live BIM model-health platform on Azure from Revit telemetry (BIMbeats, Guardian, journal files, Autodesk Construction Cloud, Airtable), automated with GitHub Actions. Benchmarked seven walk-forward forecasters, including tabular foundation models (TabICL, TabPFN v2): the best reached 0.245 PR-AUC against a 0.054 baseline, a 4.5× lift across 871 project-months. Added a retrieval-augmented generation layer for weekly personalized Revit training.",
   },
   {
     period: "2023 — Present",
     title: "Graduate Research Assistant",
-    org: "Dept. of Construction Management, Louisiana State University",
+    org: "Louisiana State University",
     detail:
-      "Built a ROS-based mobile sensing pipeline; trained Transformer/RNN forecasting and PPO control policies; ran CFD studies validated against sensor data.",
+      "Deep RL (PPO) for real-time CFD calibration and ventilation control; active learning and Bayesian optimization for sensor placement; a custom ROS 2 mobile sensing robot; Transformer and BiLSTM forecasting with transfer learning; physics-regularized KAN surrogates; thermal-comfort models from IR imaging and wearables.",
   },
   {
     period: "2018 — Present",
     title: "Lecturer",
-    org: "Various Universities",
-    detail:
-      "Delivered complex technical coursework across 30+ sessions at multiple institutions.",
+    org: "Various universities, Iran",
+    detail: "Delivered 30+ technical sessions across multiple institutions.",
   },
   {
     period: "2017 — 2018",
@@ -334,62 +394,78 @@ export const experience: TimelineItem[] = [
 export const education: TimelineItem[] = [
   {
     period: "2023 — Present",
-    title: "Ph.D., Construction Management",
+    title: "Ph.D. Candidate, Construction Management",
     org: "Louisiana State University",
     detail:
-      "Optimizing Indoor Air Quality and HVAC Systems using AI and Robots.",
+      "Deep reinforcement learning and DNN integration with EBM to predict indoor physical fields in real time. Coursework: deep learning, machine learning, reinforcement learning, Bayesian optimization, LLMs, agentic AI.",
   },
   {
     period: "2024 — 2026",
-    title: "M.Sc., Computer Science",
+    title: "M.S., Computer Science",
     org: "Louisiana State University",
-    detail: "Thesis: Prediction of Airflow Distribution using EBM and AI.",
+    detail:
+      "Thesis: Transfer Learning with a Transformer Adapter for Personalized Thermal Comfort Prediction Using Sensors. Coursework: AI, machine learning, deep learning, agentic AI, LLMs (RAG).",
   },
   {
     period: "2017 — 2020",
-    title: "M.Sc., Architectural Engineering",
+    title: "M.S., Architectural Engineering",
     org: "Iran University of Science and Technology, Tehran",
     detail:
       "Thesis: Modeling particle dispersion around buildings using CFD.",
   },
   {
     period: "2013 — 2017",
-    title: "B.Sc., Architectural Engineering",
-    org: "Malayer University",
+    title: "B.S., Architectural Engineering",
+    org: "Malayer University, Hamadan",
     detail: "Project: Research & simulation of houses' energy consumption.",
   },
 ];
 
 export const skills: { group: string; items: string[] }[] = [
-  { group: "Programming", items: ["Python", "SQL", "C / C++"] },
+  { group: "Languages", items: ["Python", "TypeScript", "SQL", "C / C++", "MATLAB"] },
   {
-    group: "ML & Data",
-    items: ["PyTorch", "scikit-learn", "XGBoost", "Pandas", "NumPy", "Time-Series"],
+    group: "ML & Deep Learning",
+    items: [
+      "PyTorch",
+      "scikit-learn",
+      "XGBoost",
+      "Transformers",
+      "RNN / LSTM",
+      "Reinforcement Learning (PPO)",
+      "Bayesian Optimization",
+      "TabPFN v2 · TabICL",
+      "KAN",
+      "POD & Surrogate Models",
+    ],
   },
   {
-    group: "AI & LLMs",
-    items: ["Deep Learning", "Transformers", "RNNs", "Reinforcement Learning", "RAG"],
+    group: "LLMs & Agents",
+    items: ["RAG", "Agentic Workflows", "Vector Retrieval", "Prompt Engineering"],
   },
   {
     group: "Robotics",
-    items: ["ROS / ROS 2", "SLAM", "Nav2", "LiDAR", "Sensor Fusion", "MQTT"],
+    items: ["ROS 2", "SLAM", "Nav2", "Sensor Fusion", "LiDAR", "IR Camera"],
   },
   {
-    group: "Simulation",
-    items: ["ANSYS Fluent", "MATLAB", "EnergyPlus", "CFD"],
+    group: "Data & Infrastructure",
+    items: ["Pandas", "NumPy", "Elasticsearch", "SQL Server", "Azure", "GitHub Actions", "Docker", "Git", "Linux", "MQTT", "Jupyter"],
   },
-  { group: "Tooling", items: ["Git", "Linux", "Docker", "Jupyter"] },
+  {
+    group: "Simulation & Domain",
+    items: ["ANSYS Fluent", "EnergyPlus", "CFD Post-processing", "Building Energy & HVAC Modeling"],
+  },
 ];
 
 export const honors: string[] = [
+  "Scholarship award, IAQVEC Conference 2026, Los Angeles",
   "2nd place, poster presentation — Dept. of Construction Management, LSU (2025)",
-  "Tuition fee waiver, Iran University of Science and Technology — top 0.25% in the national master's entrance exam",
+  "Full tuition waiver, Iran University of Science and Technology — ranked top 0.25% nationally in the graduate entrance exam",
   "Top 5% in the national B.Sc. university entrance exam, Iran (2013)",
   "2nd prize, contemporary shelter design for post-natural disasters — Iranian Red Crescent",
 ];
 
 export const stats: { value: string; label: string }[] = [
-  { value: "9+", label: "Peer-reviewed publications" },
-  { value: "2", label: "M.Sc. degrees + Ph.D. in progress" },
-  { value: "10+", label: "Years across research & practice" },
+  { value: "35", label: "Indexed publications" },
+  { value: "5", label: "h-index (Google Scholar)" },
+  { value: "2", label: "M.S. degrees + Ph.D. in progress" },
 ];

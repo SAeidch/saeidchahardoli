@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { profile } from "@/data/profile";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -9,20 +10,27 @@ const sections = [
   { id: "about", label: "About" },
   { id: "research", label: "Research" },
   { id: "robot", label: "Robot" },
+  { id: "learn", label: "Learn" },
   { id: "publications", label: "Publications" },
   { id: "cv", label: "CV" },
   { id: "contact", label: "Contact" },
 ];
 
 export default function Nav() {
+  const pathname = usePathname();
+  const onHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState<string>("top");
+  const [scrollActive, setActive] = useState<string>("top");
   const [menuOpen, setMenuOpen] = useState(false);
+  // Off the home page, section links jump back to the home page; /learn/* lights up "Learn".
+  const active = onHome ? scrollActive : pathname.startsWith("/learn") ? "learn" : "";
+  const hrefFor = (id: string) => (onHome ? `#${id}` : id === "learn" ? "/learn" : `/#${id}`);
 
   useEffect(() => {
     const ids = sections.map((s) => s.id);
     const onScroll = () => {
       setScrolled(window.scrollY > 24);
+      if (!onHome) return;
       const pos = window.scrollY + 140;
       let current = "top";
       for (const id of ids) {
@@ -34,7 +42,7 @@ export default function Nav() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [onHome]);
 
   return (
     <header
@@ -44,7 +52,7 @@ export default function Nav() {
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <a
-          href="#top"
+          href={onHome ? "#top" : "/"}
           className="press font-mono text-sm uppercase tracking-[0.25em] text-ink"
           onClick={() => setMenuOpen(false)}
         >
@@ -53,13 +61,13 @@ export default function Nav() {
         </a>
 
         {/* Desktop links with a spring active-section indicator */}
-        <ul className="hidden items-center gap-7 md:flex">
+        <ul className="hidden items-center gap-6 lg:flex">
           {sections.map((s) => {
             const isActive = active === s.id;
             return (
               <li key={s.id} className="relative">
                 <a
-                  href={`#${s.id}`}
+                  href={hrefFor(s.id)}
                   className={`font-mono text-xs uppercase tracking-[0.18em] transition-colors hover:text-accent ${
                     isActive ? "text-accent" : "text-ink/60"
                   }`}
@@ -93,7 +101,7 @@ export default function Nav() {
             onClick={() => setMenuOpen((o) => !o)}
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
-            className="press grid h-9 w-9 place-items-center rounded-full border border-ink/15 text-ink/70 md:hidden"
+            className="press grid h-9 w-9 place-items-center rounded-full border border-ink/15 text-ink/70 lg:hidden"
           >
             <div className="relative h-3 w-4">
               <motion.span
@@ -117,7 +125,7 @@ export default function Nav() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            className="md:hidden"
+            className="lg:hidden"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
@@ -128,7 +136,7 @@ export default function Nav() {
               {sections.map((s) => (
                 <li key={s.id}>
                   <a
-                    href={`#${s.id}`}
+                    href={hrefFor(s.id)}
                     onClick={() => setMenuOpen(false)}
                     className={`block rounded-lg px-3 py-2.5 font-mono text-sm uppercase tracking-[0.15em] transition-colors ${
                       active === s.id
