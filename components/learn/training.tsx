@@ -8,6 +8,7 @@ import MatMul from "@/components/learn/MatMul";
 import Tex from "@/components/learn/Tex";
 import { LineChart } from "@/components/learn/charts";
 import { Step, Lens, Pair, MathCard, CodeLine, Note } from "@/components/learn/Step";
+import { DecisionMap, ClassScatter } from "@/components/learn/visuals";
 
 const R = String.raw;
 const CLS = tt.CLASSES as readonly string[];
@@ -411,6 +412,17 @@ export function TrainingStep() {
             {CLS.map((c, k) => (
               <Stat key={c} value={met.f1s[k].toFixed(3)} label={`F1 · ${c}`} small />
             ))}
+          </div>
+        </div>
+        <div className="mt-14">
+          <h3 className="display mb-2 text-2xl text-ink">What the model has learned</h3>
+          <p className="mb-8 max-w-3xl text-sm leading-relaxed text-ink/65">
+            Two views of the same 227 numbers. Press <b>New seed</b> to see them as noise, then <b>Train</b> and watch the
+            colors line up with the rule and the three classes separate.
+          </p>
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
+            <DecisionMap />
+            <ClassScatter />
           </div>
         </div>
       </Lens>

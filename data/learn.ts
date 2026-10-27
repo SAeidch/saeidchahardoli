@@ -34,6 +34,10 @@ export type Talk = {
   blurb: string;
   tags: string[];
   note?: string;
+  /** Screenshot of the title page (public/talks/thumbs). */
+  thumb: string;
+  /** The deck's chapters, as shown in its own navigation. */
+  chapters: string[];
 };
 
 export const talks: Talk[] = [
@@ -48,6 +52,8 @@ export const talks: Talk[] = [
     blurb:
       "A Transformer (T3C) pretrained on 44,124 ASHRAE records, adapted to 596 local observations and three sensed signals with a small adapter. 73.3% accuracy against 67.8% for a BiLSTM adapter. Scroll-driven deck with an interactive 3D model of the network.",
     tags: ["Transformers", "Transfer learning", "Thermal comfort", "WebGL"],
+    thumb: "/talks/thumbs/ms-defense.jpg",
+    chapters: ["Introduction", "Full sensing", "Field data", "Methods", "Results", "Discussion", "Conclusion"],
   },
   {
     title: "Summer 2026 Data Science / AI Intern — Final Project Presentation",
@@ -60,5 +66,7 @@ export const talks: Talk[] = [
       "Nearly 350,000 Revit model saves across 449 projects, scored on 40 health checks. Change-point detection, a TabICL forecaster with a 4.5× lift over baseline, and a coaching loop that turns the findings into weekly training.",
     tags: ["Data science", "Forecasting", "BOCPD", "Azure"],
     note: "Public version: client project names are anonymized.",
+    thumb: "/talks/thumbs/hart-howerton.jpg",
+    chapters: ["The problem", "The data", "What we found", "The system", "What's next"],
   },
 ];

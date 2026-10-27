@@ -4,9 +4,14 @@ import Reveal from "@/components/Reveal";
 import Robot from "@/components/Robot";
 import TransformerHero from "@/components/TransformerHero";
 import { ModuleCard, TalkList } from "@/components/learn/Cards";
+import ResearchViz from "@/components/viz/ResearchViz";
+import PubChart from "@/components/viz/PubChart";
+import CareerTimeline from "@/components/viz/CareerTimeline";
+import PurposeGlyph from "@/components/viz/PurposeGlyph";
 import { modules } from "@/data/learn";
 import {
   profile,
+  purpose,
   researchAreas,
   publications,
   experience,
@@ -30,20 +35,39 @@ function highlightAuthors(authors: string) {
   );
 }
 
+function pubsByYear() {
+  const dated = publications.filter((p) => /^\d{4}$/.test(p.year));
+  const years = [...new Set(dated.map((p) => Number(p.year)))].sort((a, b) => a - b);
+  return {
+    rows: years.map((year) => ({
+      year,
+      ai: dated.filter((p) => Number(p.year) === year && p.theme === "ai").length,
+      physics: dated.filter((p) => Number(p.year) === year && p.theme === "physics").length,
+    })),
+    undated: publications.length - dated.length,
+  };
+}
+
+/** Build date as a decimal year (the page is prerendered, so this is fixed per deploy). */
+const BUILT = new Date();
+const NOW_YEAR = BUILT.getFullYear() + BUILT.getMonth() / 12 + BUILT.getDate() / 365;
+
 export default function Home() {
+  const pubYears = pubsByYear();
   return (
     <main id="top" className="relative">
       <Nav />
 
       {/* ── Hero ─────────────────────────────────────────── */}
-      <section className="relative flex min-h-screen items-center px-6 pb-20 pt-28">
-        <div className="mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
-          <div>
+      <section className="relative overflow-hidden px-6 pt-28 lg:flex lg:min-h-screen lg:items-center lg:pb-16">
+        {/* pointer-events pass through this full-width wrapper to the model behind it */}
+        <div className="pointer-events-none relative z-10 mx-auto w-full max-w-7xl">
+          <div className="pointer-events-auto max-w-xl lg:max-w-[25rem] xl:max-w-xl">
             <p className="section-label mb-6 flex items-center gap-3">
               <span className="inline-block h-px w-10 bg-accent" />
-              {profile.location}
+              {purpose.kicker} · {profile.location}
             </p>
-            <h1 className="display display-xl text-[15vw] text-ink sm:text-[11vw] lg:text-[5.6rem] xl:text-[6.6rem]">
+            <h1 className="display display-xl text-[15vw] text-ink sm:text-[11vw] lg:text-[5rem] xl:text-[6.6rem]">
               Saeid
               <br />
               <span className="italic text-accent">Chahardoli</span>
@@ -55,9 +79,7 @@ export default function Home() {
                 </span>
               ))}
             </div>
-            <p className="mt-10 max-w-xl text-lg leading-relaxed text-ink/80 sm:text-xl">
-              {profile.tagline}
-            </p>
+            <p className="mt-10 text-lg leading-relaxed text-ink/80 sm:text-xl">{profile.tagline}</p>
             <div className="mt-10 flex flex-wrap gap-4">
               <a
                 href="#research"
@@ -72,23 +94,45 @@ export default function Home() {
                 Learn Transformers
               </Link>
             </div>
-          </div>
-
-          {/* The model from the M.S. defense, drawn live — signature as figure. */}
-          <figure>
-            <TransformerHero className="h-[24rem] sm:h-[30rem] lg:h-[min(76vh,700px)]" />
-            <figcaption className="mt-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 font-mono text-[0.66rem] leading-relaxed tracking-wide text-ink/45">
-              <span>
-                softmax(QKᵀ/√d<sub>k</sub>)·V — the Transformer + adapter from my M.S. defense
-              </span>
+            <p className="mt-10 max-w-md font-mono text-[0.68rem] leading-relaxed tracking-wide text-ink/50">
+              <span className="lg:hidden">Below</span>
+              <span className="hidden lg:inline">On the right</span>: the Transformer + adapter from my M.S. defense, drawn
+              live. Click it to spin, drag to rotate.{" "}
               <Link href="/learn/transformers" className="text-accent hover:underline">
                 How it works, number by number →
               </Link>
-            </figcaption>
-          </figure>
+            </p>
+          </div>
         </div>
-        <div className="section-label absolute bottom-6 left-1/2 hidden -translate-x-1/2 animate-pulse sm:block">
-          scroll ↓
+
+        {/* The model itself — large, on the page, no frame around it. */}
+        <TransformerHero className="-mx-6 mt-6 h-[34rem] sm:h-[42rem] lg:absolute lg:bottom-6 lg:right-0 lg:top-20 lg:mx-0 lg:mt-0 lg:h-auto lg:w-[58vw] xl:w-[60vw]" />
+      </section>
+
+      {/* ── Purpose ──────────────────────────────────────── */}
+      <section id="purpose" className="relative border-t border-ink/10 px-6 py-24">
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <p className="section-label mb-5 !text-accent">{purpose.kicker}</p>
+            <h2 className="display max-w-4xl text-4xl leading-tight text-ink sm:text-6xl">
+              Here, <span className="italic text-accent">math</span> meets <span className="italic text-accent">applied AI</span>.
+            </h2>
+            <p className="mt-8 max-w-3xl text-lg leading-relaxed text-ink/75">{purpose.statement}</p>
+          </Reveal>
+          <div className="mt-14 grid gap-5 sm:grid-cols-3">
+            {purpose.pillars.map((pl, i) => (
+              <Reveal key={pl.id} delay={i * 0.06}>
+                <a
+                  href={pl.href}
+                  className="group flex h-full flex-col rounded-2xl border border-ink/10 p-6 transition-colors hover:border-accent/50"
+                >
+                  <PurposeGlyph id={pl.id} />
+                  <h3 className="display mt-5 text-2xl text-ink transition-colors group-hover:text-accent">{pl.label} →</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-ink/65">{pl.text}</p>
+                </a>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -155,11 +199,12 @@ export default function Home() {
             {researchAreas.map((area, i) => (
               <Reveal key={area.index} delay={i * 0.06}>
                 <article className="group h-full bg-paper p-8 transition-colors hover:bg-paper/40 sm:p-10">
-                  <div className="mb-6 flex items-baseline justify-between">
+                  <div className="mb-4 flex items-baseline justify-between">
                     <span className="display text-5xl text-ink/15 transition-colors group-hover:text-accent/40">
                       {area.index}
                     </span>
                   </div>
+                  <ResearchViz index={area.index} />
                   <h3 className="display mb-4 text-2xl text-ink">{area.title}</h3>
                   <p className="mb-6 text-ink/70">{area.blurb}</p>
                   <ul className="flex flex-wrap gap-2">
@@ -229,6 +274,11 @@ export default function Home() {
               Selected publications
             </h2>
           </Reveal>
+          <Reveal>
+            <div className="mb-14">
+              <PubChart rows={pubYears.rows} undated={pubYears.undated} />
+            </div>
+          </Reveal>
           <ol className="divide-y divide-ink/10">
             {publications.map((p, i) => {
               const href = p.doi ? `https://doi.org/${p.doi}` : p.url;
@@ -290,7 +340,12 @@ export default function Home() {
       <section id="cv" className="relative border-t border-ink/10 px-6 py-28">
         <div className="mx-auto max-w-6xl">
           <Reveal>
-            <p className="section-label mb-16">06 / Curriculum Vitae</p>
+            <p className="section-label mb-10">06 / Curriculum Vitae</p>
+          </Reveal>
+          <Reveal>
+            <div className="mb-16">
+              <CareerTimeline education={education} experience={experience} now={NOW_YEAR} />
+            </div>
           </Reveal>
           <div className="grid gap-16 lg:grid-cols-2">
             <div>

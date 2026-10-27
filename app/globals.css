@@ -244,9 +244,16 @@ body {
 }
 
 /* ── Hero: the 3D Transformer from the M.S. defense (lib/hero3d.js) ───────
-   A dark "plate" in both themes — like a screen set into the page. */
+   Drawn straight onto the page color, so there is no plate around it; labels
+   and leader lines use the theme tokens. --hero-gold marks the parts that
+   were trained on local data. */
+:root {
+  --hero-gold: #9a5f00;
+}
+:root[data-theme="dark"] {
+  --hero-gold: #ffd27a;
+}
 .h3 {
-  background: #05070f;
   overflow: hidden;
 }
 .h3 canvas {
@@ -257,9 +264,15 @@ body {
   display: block;
   cursor: grab;
   touch-action: pan-y;
+  outline: none;
 }
 .h3 canvas:active {
   cursor: grabbing;
+}
+.h3 canvas:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+  border-radius: 12px;
 }
 .h3-lines {
   position: absolute;
@@ -268,18 +281,20 @@ body {
   height: 100%;
   pointer-events: none;
   overflow: visible;
+  transition: opacity 0.2s ease;
 }
 .h3-lines line {
-  stroke: rgba(214, 222, 255, 0.36);
+  stroke: color-mix(in srgb, var(--color-ink) 32%, transparent);
   stroke-width: 1;
 }
 .h3-lines circle {
-  fill: #ffd56a;
+  fill: var(--hero-gold);
 }
 .h3-labels {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  transition: opacity 0.2s ease;
 }
 .h3-lab {
   position: absolute;
@@ -287,20 +302,20 @@ body {
   top: 0;
   white-space: nowrap;
   font: 600 12px var(--font-geist-sans), system-ui, sans-serif;
-  color: #eef1fa;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.85);
+  color: var(--color-ink);
+  text-shadow: 0 0 6px var(--color-paper), 0 0 2px var(--color-paper), 0 0 1px var(--color-paper);
 }
 .h3-lab small {
   display: block;
   font: 500 10.5px var(--font-geist-sans), system-ui, sans-serif;
-  color: #9eaacb;
+  color: color-mix(in srgb, var(--color-ink) 58%, transparent);
   margin-top: 1px;
 }
 .h3-lab.l {
   text-align: right;
 }
 .h3-lab.gold {
-  color: #ffd27a;
+  color: var(--hero-gold);
 }
 .h3-head {
   position: absolute;
@@ -309,7 +324,7 @@ body {
   font: 600 10.5px var(--font-geist-mono), monospace;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #b9b0ff;
+  color: var(--color-accent);
   pointer-events: none;
 }
 .h3-foot {
@@ -324,7 +339,7 @@ body {
   flex-wrap: wrap;
   gap: 4px 14px;
   font: 500 11px var(--font-geist-sans), system-ui, sans-serif;
-  color: #c9d1e8;
+  color: color-mix(in srgb, var(--color-ink) 72%, transparent);
 }
 .h3-legend i {
   display: inline-block;
@@ -337,12 +352,43 @@ body {
 .h3-cap {
   margin-top: 6px;
   font: italic 11px var(--font-fraunces), Georgia, serif;
-  color: #7f8bab;
+  color: color-mix(in srgb, var(--color-ink) 48%, transparent);
 }
-/* Labels need room; on narrow plates keep only the model + legend. */
+/* Labels need room; on narrow screens keep only the model + legend. */
 @media (max-width: 639px) {
   .h3-labels,
   .h3-lines {
     display: none;
+  }
+}
+
+/* ── Small explanatory figures (components/viz) ──────────────────────────
+   Dashes drift along flow lines; .viz-ride moves an element along its CSS
+   offset-path. Both stop under reduced motion. */
+@keyframes viz-flow {
+  to {
+    stroke-dashoffset: -18;
+  }
+}
+.viz-flow {
+  stroke-dasharray: 6 3;
+  animation: viz-flow 1.4s linear infinite;
+}
+@keyframes viz-ride {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+.viz-ride {
+  offset-rotate: 0deg;
+  animation: viz-ride 3.2s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .viz-flow,
+  .viz-ride {
+    animation: none;
   }
 }

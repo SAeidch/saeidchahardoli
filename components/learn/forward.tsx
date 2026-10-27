@@ -8,6 +8,7 @@ import MatMul from "@/components/learn/MatMul";
 import Tex from "@/components/learn/Tex";
 import { ProbBars } from "@/components/learn/charts";
 import { Step, Lens, Pair, MathCard, CodeLine, Note } from "@/components/learn/Step";
+import { ArchitectureMap, AttentionArcs } from "@/components/learn/visuals";
 
 const R = String.raw;
 const STEPS = tt.STEPS as readonly string[];
@@ -125,7 +126,7 @@ export function TaskStep() {
         </div>
       </Lens>
 
-      <PipelineMap />
+      <ArchitectureMap />
     </Step>
   );
 }
@@ -172,36 +173,6 @@ function NumCell({
       aria-label={`${label} (${lo}–${hi})`}
       className="w-24 rounded-lg border border-ink/15 bg-paper px-2.5 py-1.5 font-mono tabular-nums text-ink outline-none focus:border-accent"
     />
-  );
-}
-
-function PipelineMap() {
-  const stages: [string, string, string][] = [
-    ["normalize", "X", "4×3"],
-    ["embed", "Z⁽⁰⁾", "4×4"],
-    ["qkv", "Q, K, V", "2 heads × 4×2"],
-    ["scores", "S", "4×4"],
-    ["softmax", "A", "4×4"],
-    ["mix", "MHSA", "4×4"],
-    ["addnorm", "Z̃", "4×4"],
-    ["ffn", "Z⁽¹⁾", "4×8 → 4×4"],
-    ["classify", "p", "1×3"],
-  ];
-  return (
-    <div>
-      <p className="section-label mb-3 !text-[0.64rem]">The whole forward pass, by shape</p>
-      <ol className="flex flex-wrap items-center gap-x-1 gap-y-2">
-        {stages.map(([id, name, shape], i) => (
-          <li key={id} className="flex items-center gap-1">
-            {i > 0 && <span className="px-1 text-ink/30">→</span>}
-            <a href={`#${id}`} className="press rounded-lg border border-ink/12 px-3 py-1.5 transition-colors hover:border-accent">
-              <span className="text-sm text-ink">{name}</span>{" "}
-              <span className="font-mono text-[0.66rem] text-ink/45">{shape}</span>
-            </a>
-          </li>
-        ))}
-      </ol>
-    </div>
   );
 }
 
@@ -628,6 +599,7 @@ function SoftmaxView({ S, A, sub }: { S: tt.Mat; A: tt.Mat; sub: string }) {
           outlines={[{ kind: "row", index: row, role: "out" }]}
           caption="Bold = where each row attends most. Darker = larger weight."
         />
+        <AttentionArcs A={A} row={row} setRow={setRow} head={sub} />
       </div>
       <div className="overflow-x-auto rounded-xl border border-ink/10 bg-paper/70 p-4">
         <p className="section-label mb-2 !text-[0.62rem]">Row {STEPS[row]} worked out — tap a row to switch</p>

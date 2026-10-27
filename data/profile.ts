@@ -22,6 +22,33 @@ export const profile = {
   },
 } as const;
 
+/* The purpose of the site, said once near the top of the home page. */
+export const purpose = {
+  kicker: "Math × Applied AI",
+  statement:
+    "This site is my lab notebook in public: research on intelligent buildings and robots, and interactive lessons that open up the models behind them until every number makes sense. It is for students, engineers and anyone curious about how AI actually works.",
+  pillars: [
+    {
+      id: "research",
+      label: "Research",
+      href: "#research",
+      text: "AI for the built environment: reinforcement learning, physics-informed models and robots that sense the air.",
+    },
+    {
+      id: "learn",
+      label: "Learn",
+      href: "/learn",
+      text: "Interactive lessons that run real models in your browser and show the math behind every prediction.",
+    },
+    {
+      id: "talks",
+      label: "Talks",
+      href: "/learn#talks",
+      text: "The decks from my M.S. defense and my Hart Howerton internship, open to explore.",
+    },
+  ],
+} as const;
+
 export type ResearchArea = {
   index: string;
   title: string;
@@ -222,6 +249,9 @@ export type Publication = {
   venue: string;
   doi?: string;
   url?: string;
+  /** For the by-year chart: machine learning / AI, or building physics & CFD. */
+  theme: "ai" | "physics";
+  kind: "journal" | "conference" | "chapter" | "preprint";
 };
 
 // Author name emphasized in the UI:
@@ -235,6 +265,8 @@ export const publications: Publication[] = [
     title:
       "Indoor Airflow Patterns for Random Occupant Movement Prediction Using an Event-Based Approach",
     venue: "SSRN preprint 6847975",
+    theme: "ai",
+    kind: "preprint",
     url: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6847975",
   },
   {
@@ -243,6 +275,8 @@ export const publications: Publication[] = [
     title:
       "Real-Time CFD Model Calibration of an Environmental Chamber Using Deep Reinforcement Learning",
     venue: "ASHRAE Transactions, 132, 1233–1240",
+    theme: "ai",
+    kind: "conference",
   },
   {
     authors: "Chahardoli, S., Sedghikhanshir, A., Chen, Y., Zhu, Y., & Bhattacharya, A.",
@@ -250,6 +284,8 @@ export const publications: Publication[] = [
     title:
       "Experimental and Numerical Analysis of Evaluating the Cooling Potential of a Green Wall in a Controlled Chamber",
     venue: "Building and Environment, art. 115119",
+    theme: "physics",
+    kind: "journal",
   },
   {
     authors: "Chahardoli, S., Sarker, A., Lesan, M., Xiao, Y., Johannsen, A. Z., & Bhattacharya, A.",
@@ -257,6 +293,8 @@ export const publications: Publication[] = [
     title:
       "SIMOC-Inspired Mesh Sensing and Combinatorial Bayesian Optimization of Chamber Air-Purifier Placement",
     venue: "E3S Web of Conferences, 716, 01047",
+    theme: "ai",
+    kind: "conference",
   },
   {
     authors: "Sarker, A., Lesan, M., Chahardoli, S., & Bhattacharya, A.",
@@ -264,6 +302,8 @@ export const publications: Publication[] = [
     title:
       "Real-Time Indoor CO₂ Distribution Prediction Using CFD and a Physics-Regularized Kolmogorov–Arnold Network",
     venue: "E3S Web of Conferences, 716, 01039",
+    theme: "ai",
+    kind: "conference",
   },
   {
     authors: "Xiao, Y., Chahardoli, S., Lesan, M., Sarker, A., Johannsen, A. Z., & Bhattacharya, A.",
@@ -271,6 +311,8 @@ export const publications: Publication[] = [
     title:
       "Optimizing Ventilation Inlet and Outlet Configurations Using a UQ-Informed Robotic Sensing Platform",
     venue: "E3S Web of Conferences, 716, 01049",
+    theme: "ai",
+    kind: "conference",
   },
   {
     authors: "Chahardoli, S., Lesan, M., & Bhattacharya, A.",
@@ -278,12 +320,16 @@ export const publications: Publication[] = [
     title:
       "A Reinforcement Learning-Based Ventilation Strategy for Occupant-Centric Thermal Comfort and Energy Efficiency",
     venue: "Computing in Civil Engineering 2025",
+    theme: "ai",
+    kind: "conference",
   },
   {
     authors: "Chahardoli, S., Zhu, Y., & Bhattacharya, A.",
     year: "2025",
     title: "Data-Driven Prediction of Thermal Comfort Using IR Imaging and Wearable Sensor Data",
     venue: "REHVA HVAC World Congress, 530–540",
+    theme: "ai",
+    kind: "conference",
   },
   {
     authors: "Chahardoli, S., Nikoopayan Tak, M. S., Lesan, M., Mousavi, E., & Bhattacharya, A.",
@@ -291,6 +337,8 @@ export const publications: Publication[] = [
     title:
       "Analysis of the Effects of a Swing Door Opening on Indoor Airflow Fields — An Experimental Study",
     venue: "Buildings, 16(1), 54",
+    theme: "physics",
+    kind: "journal",
   },
   {
     authors: "Lesan, M., Chahardoli, S., & Bhattacharya, A.",
@@ -298,6 +346,8 @@ export const publications: Publication[] = [
     title:
       "The Synergy of Ventilation System Layouts and Occupant Arrangements on Ventilation Effectiveness: A Case Study in a Shared Office",
     venue: "Buildings",
+    theme: "physics",
+    kind: "journal",
     doi: "10.3390/buildings15213914",
   },
   {
@@ -306,6 +356,8 @@ export const publications: Publication[] = [
     title:
       "The Effects of Diffuser Location on Ventilated Airflow — A Numerical Simulation Study",
     venue: "ASHRAE Transactions, 130, 775–783",
+    theme: "physics",
+    kind: "conference",
   },
   {
     authors: "Khakzand, M., Deljouiee, B., Chahardoli, S., & Siavashi, M.",
@@ -313,6 +365,8 @@ export const publications: Publication[] = [
     title:
       "Radiative Cooling Ventilation Improvement Using an Integrated System of Windcatcher and Solar Chimney",
     venue: "Journal of Building Engineering",
+    theme: "physics",
+    kind: "journal",
     doi: "10.1016/j.jobe.2023.108409",
   },
   {
@@ -321,6 +375,8 @@ export const publications: Publication[] = [
     title:
       "The Relationship Between IAQ (CO, CO₂, PM2.5, PM10), Air Outlet Location and Emission Behavior in Healthcare Facilities (Namazi Hospital, Shiraz)",
     venue: "International Journal of Ventilation",
+    theme: "physics",
+    kind: "journal",
     doi: "10.1080/14733315.2023.2198743",
   },
   {
@@ -329,6 +385,8 @@ export const publications: Publication[] = [
     title:
       "Indoor Air Quality in Health Care Units (Case Study: Namazi Hospital, Shiraz, Iran)",
     venue: "IntechOpen",
+    theme: "physics",
+    kind: "chapter",
     doi: "10.5772/intechopen.113724",
   },
   {
@@ -337,6 +395,8 @@ export const publications: Publication[] = [
     title:
       "Numerical Analysis of the Effect of Roof Types and Porch on Particle Dispersion and Deposition Around a Low-Rise Building",
     venue: "Journal of Building Engineering, 53, 104533",
+    theme: "physics",
+    kind: "journal",
   },
   {
     authors: "Khakzand, M., Chahardoli, S., Niknejad, A., & Khanijazani, T.",
@@ -344,6 +404,8 @@ export const publications: Publication[] = [
     title:
       "Comparative Study of Architectural Elements to Improve the Wind Environment in Hot and Humid Climates",
     venue: "Journal of Design and Built Environment",
+    theme: "physics",
+    kind: "journal",
   },
   {
     authors: "Khakzand, M., & Chahardoli, S.",
@@ -351,6 +413,8 @@ export const publications: Publication[] = [
     title:
       "Indoor Thermal Comfort and High Residential Buildings (Case Study: Two High-Rise Buildings in Tehran)",
     venue: "Journal of Urban Management and Energy Sustainability (JUMES)",
+    theme: "physics",
+    kind: "journal",
     doi: "10.22034/JUMES.2021.553631.1075",
   },
 ];
@@ -360,11 +424,16 @@ export type TimelineItem = {
   title: string;
   org: string;
   detail: string;
+  /** For the career timeline chart: decimal years; no end = ongoing. */
+  start: number;
+  end?: number;
 };
 
 export const experience: TimelineItem[] = [
   {
     period: "Jun — Aug 2026",
+    start: 2026.42,
+    end: 2026.67,
     title: "Data Scientist / AI Intern",
     org: "Hart Howerton, San Francisco, CA",
     detail:
@@ -372,6 +441,7 @@ export const experience: TimelineItem[] = [
   },
   {
     period: "2023 — Present",
+    start: 2023,
     title: "Graduate Research Assistant",
     org: "Louisiana State University",
     detail:
@@ -379,12 +449,15 @@ export const experience: TimelineItem[] = [
   },
   {
     period: "2018 — Present",
+    start: 2018,
     title: "Lecturer",
     org: "Various universities, Iran",
     detail: "Delivered 30+ technical sessions across multiple institutions.",
   },
   {
     period: "2017 — 2018",
+    start: 2017,
+    end: 2018,
     title: "Project Management Intern",
     org: "Pahneh Band Consulting Engineers, Tehran",
     detail: "Participated in all phases of design and construction.",
@@ -394,6 +467,7 @@ export const experience: TimelineItem[] = [
 export const education: TimelineItem[] = [
   {
     period: "2023 — Present",
+    start: 2023,
     title: "Ph.D. Candidate, Construction Management",
     org: "Louisiana State University",
     detail:
@@ -401,6 +475,8 @@ export const education: TimelineItem[] = [
   },
   {
     period: "2024 — 2026",
+    start: 2024,
+    end: 2026.83,
     title: "M.S., Computer Science",
     org: "Louisiana State University",
     detail:
@@ -408,6 +484,8 @@ export const education: TimelineItem[] = [
   },
   {
     period: "2017 — 2020",
+    start: 2017,
+    end: 2020,
     title: "M.S., Architectural Engineering",
     org: "Iran University of Science and Technology, Tehran",
     detail:
@@ -415,6 +493,8 @@ export const education: TimelineItem[] = [
   },
   {
     period: "2013 — 2017",
+    start: 2013,
+    end: 2017,
     title: "B.S., Architectural Engineering",
     org: "Malayer University, Hamadan",
     detail: "Project: Research & simulation of houses' energy consumption.",

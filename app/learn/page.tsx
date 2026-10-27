@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import Reveal from "@/components/Reveal";
 import { ModuleCard, TalkList } from "@/components/learn/Cards";
 import { modules } from "@/data/learn";
-import { profile } from "@/data/profile";
+import { profile, purpose } from "@/data/profile";
 
 export const metadata: Metadata = {
-  title: `Learn — ${profile.name}`,
+  title: `Learn â€” ${profile.name}`,
   description:
     "Interactive lessons on the math behind modern AI, built from real models, plus recorded talks by Saeid Chahardoli.",
   alternates: { canonical: "/learn" },
@@ -18,14 +18,14 @@ export default function LearnPage() {
         <Reveal>
           <p className="section-label mb-6 flex items-center gap-3">
             <span className="inline-block h-px w-10 bg-accent" />
-            Learn
+            {purpose.kicker} Â· Learn
           </p>
           <h1 className="display display-xl max-w-4xl text-6xl text-ink sm:text-7xl">
             The math behind the models, <span className="italic text-accent">worked out.</span>
           </h1>
           <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ink/75">
-            Interactive lessons that run a real model in your browser and show every number it computes, plus the
-            talks where I presented the work.
+            Here, math meets applied AI. These lessons run a real model in your browser and show every number it
+            computes, from the first matrix product to the final prediction; the talks are where I presented the work.
           </p>
         </Reveal>
 
