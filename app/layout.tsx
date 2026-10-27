@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono, Fraunces } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/data/profile";
@@ -83,6 +84,8 @@ export default function RootLayout({
       <body>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         {children}
+        {/* Vercel Web Analytics: cookieless page-view counts (free on Hobby, 50k events/month). */}
+        <Analytics />
       </body>
     </html>
   );
